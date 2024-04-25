@@ -3,7 +3,7 @@ pipeline {
     environment {
         BRANCH = sh(script: 'echo $GIT_BRANCH | cut -b 8-10 | tr \'[:upper:]\' \'[:lower:]\' | tr \'/\' \'_\'', returnStdout: true).trim()
         IMAGE_TAG = "proyectodevopsfrontend-$BRANCH:1.0.0-${BUILD_NUMBER}"
-        CONTAINER_NAME = "proyectodevopsbackend-$BRANCH"
+        CONTAINER_NAME = "proyectodevopsfrontend-$BRANCH"
     }
 
     stages {
