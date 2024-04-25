@@ -6,3 +6,7 @@ sudo sysctl -w net.ipv4.ip_unprivileged_port_start=80
 
 Para verificar puertos libre
 sudo ss -tuln | grep ':8081'
+
+Para correr los pipelines deben crear dos
+    1. pl-01 que apunte a Jenkinsfile1 <- este se ejecuta
+    2. pl-02 que apunte a Jenkinsfile2
