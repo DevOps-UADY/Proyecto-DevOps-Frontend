@@ -3,6 +3,8 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Logo from "../assets/favicon.svg";
 
+import { Link } from 'react-router-dom';
+
 export function Navbard() {
   return (
     <Navbar fluid rounded className="bg-red-200">
@@ -22,20 +24,20 @@ export function Navbard() {
             <span className="block text-sm">Bonnie Green</span>
             <span className="block truncate text-sm font-medium">name@flowbite.com</span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/dashboard">Dashboard</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/settings">Settings</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/earnings">Earnings</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>Sign out</Dropdown.Item>
         </Dropdown>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link href="/Dashboard">Dashboard</Navbar.Link>
-        <Navbar.Link href="/Rutas">Rutas</Navbar.Link>
-        <Navbar.Link href="#">Conductores</Navbar.Link>
-        <Navbar.Link href="#">Vehiculos</Navbar.Link>
-        <Navbar.Link href="#">Asignacciones</Navbar.Link>
+        <Navbar.Link as={Link} to="/dashboard">Dashboard</Navbar.Link>
+        <Navbar.Link as={Link} to="/rutas">Rutas</Navbar.Link>
+        <Navbar.Link as={Link} to="#">Conductores</Navbar.Link>
+        <Navbar.Link as={Link} to="#">Vehiculos</Navbar.Link>
+        <Navbar.Link as={Link} to="#">Asignacciones</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );
