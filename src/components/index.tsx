@@ -6,5 +6,6 @@ export * from "./SearchForm";
 export * from "./AddRutaButton";
 export * from "./RutaRow";
 export * from "./DropDownR"
+export * from "./ModalRuta";
 
 // Conductores
