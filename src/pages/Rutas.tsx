@@ -1,42 +1,59 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Button } from "flowbite-react";
-import { useGetExchangeRates } from "../api";
-import { ejemplo as IEjemplo } from "../interfaces";
+import { SearchForm, AddRutaButton, DropDownR, RutaRow} from "../components";
+import { Table } from "flowbite-react";
 
 export const Rutas = () => {
-    const [ejemplos, setEjemplos] = useState<IEjemplo[]>([]);
-    // incluir mutate en la linea 10 cuando se agreguen el update, delete, create
-	const { data, isError, isLoading } = useGetExchangeRates();
+    const handleEditarClick = (id: number) => {
+        console.log(`Editar ruta con id: ${id}`);
+    }
 
-    useEffect(() => {
-        if (data) {
-            setEjemplos(data);
-        }
-	}, [data, isError, isLoading]);
+    const handleEliminarClick = (id: number) => {
+        console.log(`Eliminar ruta con id: ${id}`);
+    }
+
+    const rutaEjemplo = {
+        id: 1,
+        nombreRuta: "San Nicolass",
+        estadoRuta: true,
+        latitudInicio: 190,
+        longitudInicio: 80,
+        latitudDestino: 190,
+        longitudDestino: 80,
+        fechaCreacionRuta: new Date(),
+        deletedAt: new Date(),
+    }
 
     return (
         <>
-            <div className="flex flex-wrap gap-2">
-                <Button>Default</Button>
-            </div>
-            <div>
-                {!isLoading && !isError ? (
-                    <ul
-                    role="list"
-                    className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3 divide-y my-7 divide-gray-100 overflow-auto w-full"
-                    >
-                    {ejemplos.map((example) => (
-                        <div key={example.id} className="p-4 border rounded">
-                        <h3 className="text-lg font-semibold">{example.title + example.id}</h3>
-                        <p className="text-gray-600">{example.body}</p>
-                        {/* Puedes mostrar otros campos según sea necesario */}
-                        </div>
-                    ))}
-                    </ul>
-                ) : null}
-            </div>
+            <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
+                <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+                <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+                    <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                    <SearchForm />
+                    <AddRutaButton />
+                    </div>
+                    <div className="overflow-x-auto">
+                    <Table>
+                        <Table.Head>
+                            <Table.HeadCell>ID</Table.HeadCell>
+                            <Table.HeadCell>Nombre de la ruta</Table.HeadCell>
+                            <Table.HeadCell>Punto inicial</Table.HeadCell>
+                            <Table.HeadCell>Punto Final</Table.HeadCell>
+                            <Table.HeadCell>Fecha de creación</Table.HeadCell>
+                            <Table.HeadCell>
+                                <span className="sr-only">Edit</span>
+                            </Table.HeadCell>
+                        </Table.Head>
+                        <Table.Body className="divide-y">
+                            <RutaRow ruta={rutaEjemplo}>
+                                <DropDownR onEditarClick={handleEditarClick} onEliminarClick={handleEliminarClick} value={rutaEjemplo.id} />
+                            </RutaRow>
+                        </Table.Body>
+                    </Table>
+                    </div>
+                </div>
+                </div>
+            </section>
         </>
-
-      );
+    );
 };

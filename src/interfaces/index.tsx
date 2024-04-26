@@ -1,5 +1,13 @@
 export interface Ruta {
-	nombre: string;
+	id: number;
+    nombreRuta: string;
+    estadoRuta: boolean;
+    latitudInicio: number;
+    longitudInicio: number;
+    latitudDestino: number;
+    longitudDestino: number;
+    deletedAt: Date;
+    fechaCreacionRuta: Date;
 }
 
 export interface Conductor {
