@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "es2020", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "commonjs",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
     "skipLibCheck": true,
 
+    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
+    "strictNullChecks": true, /* When type checking, take into account 'null' and 'undefined'. */
+
     /* Bundler mode */
-    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
