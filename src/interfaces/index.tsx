@@ -10,13 +10,13 @@ export interface Ruta {
     fechaCreacionRuta: Date;
 }
 
-export interface Conductor {
-	nombre: string;
+export interface RutaDTO {
+    nombreRuta: string;
+    estadoRuta: boolean;
+    latitudDestino: number;
+    longitudDestino: number;
 }
 
-export interface ejemplo{
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
+export interface Conductor {
+	nombre: string;
 }

@@ -1,14 +1,17 @@
 "use client";
 import {TextInput } from "flowbite-react";
+import { ChangeEventHandler } from "react";
 
-export function SearchForm() {
+interface Props {
+    onChangeS: ChangeEventHandler<HTMLInputElement>;
+}
+
+export const SearchForm = ({ onChangeS }: Props) => {
     return (
         <div className="w-full md:w-1/2">
             <form className="flex max-w-md flex-col gap-4">
                 <div>
-                    <div className="mb-2 block">
-                    </div>
-                    <TextInput id="email1" type="text" placeholder="Buscar" required />
+                    <TextInput id="search" type="text" placeholder="Buscar" onChange={onChangeS} />
                 </div>
             </form>
         </div>
