@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Ruta as IRuta} from "../interfaces";
 import { useGetRutas, useDeleteRuta } from "../api";
 import { Toast } from "flowbite-react";
-import { HiCheck} from "react-icons/hi";
+import { HiCheck, HiExclamation} from "react-icons/hi";
 
 
 export const Rutas = () => {
@@ -16,6 +16,7 @@ export const Rutas = () => {
     const { mutate: deleteRuta } = useDeleteRuta();
     const [filtro, setFiltro] = useState<string>("");
     const [toast, setToast] = useState(false);
+    const [toastError, setToastError] = useState(false);
     const [accion, setAccion] = useState<number>(0);
     const [idRuta, setIdRuta] = useState<number>(-0);
 
@@ -30,6 +31,9 @@ export const Rutas = () => {
         deleteRuta(id, {
             onSuccess: () => {
                 mutateInfoClients()
+            },
+            onError: () => {
+                setToastError(true);
             }
         });
     }
@@ -43,6 +47,12 @@ export const Rutas = () => {
         mutate("", {
             onSuccess: (data) => {
                 setRutas(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
             }
         });
     }, [mutate]);
@@ -109,6 +119,17 @@ export const Rutas = () => {
 					<Toast.Toggle />
 				</Toast>
 			)}
+            {
+                toastError && (
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
+                        <HiExclamation className="h-5 w-5" />
+                        </div>
+                        <div className="ml-3 text-sm font-normal">Ocurrió algo D:</div>
+                        <Toast.Toggle />
+                    </Toast>
+                )
+            }
         </>
     );
 };
