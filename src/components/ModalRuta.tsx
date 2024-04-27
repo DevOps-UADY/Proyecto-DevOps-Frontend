@@ -27,24 +27,6 @@ export const ModalRuta = ({ isOpen, onClose, mutateInfoClients, initialData, act
 	const [mensaje, setMensaje] = useState("");
 	const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
-	const handleChangeLatitud = (latitudN: string) => {
-		const latitudValue = parseFloat(latitudN);
-		if (isNaN(latitudValue) || latitudValue < -90 || latitudValue > 90) {
-			setMensaje('El valor de la latitud debe ser un número válido entre -90 y 90');
-			setMostrarAlerta(true);
-			return;
-		}
-	};
-
-    const handleChangeLongitud = (longitudN: string) => {
-        const lonfitugValue = parseInt(longitudN);
-		if (isNaN(lonfitugValue) || lonfitugValue < -180 || lonfitugValue > 180) {
-			setMensaje('El valor de la longitud debe estar entre -180 y 180');
-			setMostrarAlerta(true);
-			return;
-		}
-    };
-
 	useEffect(() => {
 		if (action===1) {
 			mutate(
@@ -74,8 +56,21 @@ export const ModalRuta = ({ isOpen, onClose, mutateInfoClients, initialData, act
 
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		handleChangeLatitud(info.latitudDestino);
-		handleChangeLongitud(info.longitudDestino);
+		const latitudValue = parseFloat(info.latitudDestino);
+		if (isNaN(latitudValue) || latitudValue < -90 || latitudValue > 90) {
+			setMensaje('El valor de la latitud debe ser un número válido entre -90 y 90');
+			setMostrarAlerta(true);
+			return;
+		}
+
+		const lonfitugValue = parseInt(info.longitudDestino);
+		if (isNaN(lonfitugValue) || lonfitugValue < -180 || lonfitugValue > 180) {
+			setMensaje('El valor de la longitud debe estar entre -180 y 180');
+			setMostrarAlerta(true);
+			return;
+		}
+
+		
 		if (action === 1){
 			updateRuta.mutate({rutaId: initialData, ruta: {...info, latitudDestino: parseFloat(info.latitudDestino), longitudDestino: parseFloat(info.longitudDestino)}}, {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -93,8 +88,6 @@ export const ModalRuta = ({ isOpen, onClose, mutateInfoClients, initialData, act
 					mutateInfoClients();
 				},
 				onError: (error) => {
-					console.log(error);
-					
 					setMensaje(error.message);
 					setMostrarAlerta(true);
 				}
