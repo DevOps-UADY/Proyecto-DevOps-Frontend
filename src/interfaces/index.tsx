@@ -1,14 +1,22 @@
 export interface Ruta {
-	nombre: string;
+	id: number;
+    nombreRuta: string;
+    estadoRuta: boolean;
+    latitudInicio: number;
+    longitudInicio: number;
+    latitudDestino: number;
+    longitudDestino: number;
+    deletedAt: Date;
+    fechaCreacionRuta: Date;
+}
+
+export interface RutaDTO {
+    nombreRuta: string;
+    estadoRuta: boolean;
+    latitudDestino: number;
+    longitudDestino: number;
 }
 
 export interface Conductor {
 	nombre: string;
-}
-
-export interface ejemplo{
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
 }

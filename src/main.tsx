@@ -33,3 +33,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		</QueryClientProvider>
 	</React.StrictMode>,
 );
+
+document.body.style.backgroundColor = '#f9fafb';

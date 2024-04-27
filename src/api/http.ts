@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const baseURL = String(import.meta.env.VITE_API_URL);
-                                    // /ruta  /vehiculo  /conductores
-export const ejemploURL = baseURL + "/posts";
+const baseURL = "http://localhost:3000/";               
+export const rutaURL = baseURL;
 
 export const httpClient = axios.create({
 	baseURL: baseURL,
