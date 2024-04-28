@@ -35,7 +35,7 @@ export function Navbard() {
       <Navbar.Collapse>
         <Navbar.Link as={Link} to="/dashboard">Dashboard</Navbar.Link>
         <Navbar.Link as={Link} to="/rutas">Rutas</Navbar.Link>
-        <Navbar.Link as={Link} to="#">Conductores</Navbar.Link>
+        <Navbar.Link as={Link} to="/conductores">Conductores</Navbar.Link>
         <Navbar.Link as={Link} to="#">Vehiculos</Navbar.Link>
         <Navbar.Link as={Link} to="#">Asignacciones</Navbar.Link>
       </Navbar.Collapse>

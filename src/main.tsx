@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Layout } from "./Layout.tsx";
-import { Rutas, Dashboard } from "./pages";
+import { Rutas, Dashboard, Conductores } from "./pages";
 import './index.css'
 
 const router = createBrowserRouter([
@@ -19,6 +19,10 @@ const router = createBrowserRouter([
 			{
 				path: "Rutas",
 				element: <Rutas />,
+			},
+			{
+				path: "Conductores",
+				element: <Conductores />,
 			},
 		],
 	},

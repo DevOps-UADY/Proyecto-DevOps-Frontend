@@ -1,18 +1,28 @@
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from "react";
-import { Ruta as IRuta} from "../interfaces";
-import { useGetRutas } from "../api";
+import { Ruta as IRuta } from "../interfaces";
+import { Conductor as IConductor} from "../interfaces";
+import {useGetConductores, useGetRutas } from "../api";
 
 export const Dashboard = () => {
     const [rutas, setRutas] = useState<IRuta[]>([]);
-    const { mutate } = useGetRutas();
+    const { mutate: mutateRutas } = useGetRutas();
+    const [conductores, setConductores] = useState<IConductor[]>([]);
+    const { mutate:mutateConductores } = useGetConductores();
+    
     useEffect(() => {
-        mutate("", {
+        mutateRutas("", {
             onSuccess: (data) => {
                 setRutas(data);
             }
         });
-    }, [mutate]);
+        mutateConductores("", {
+            onSuccess: (data) => {
+                setConductores(data);
+            }
+        });
+
+    }, [mutateRutas, mutateConductores]);
 
     return (
         <>
@@ -28,6 +38,10 @@ export const Dashboard = () => {
                         <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de rutas existentes</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{rutas.length}</dd>
                     </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de conductores existentes</dt>
+                        <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{conductores.length}</dd>
+                    </div>        
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-lg font-medium leading-6 text-gray-900">Application for</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>
