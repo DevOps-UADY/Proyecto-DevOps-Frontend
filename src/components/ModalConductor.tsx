@@ -23,7 +23,7 @@ export const ModalConductor = ({ isOpen, onClose, mutateInfoClients, initialData
 		curp: "",
         direccionCasa: "",
         salario: "1",
-        numeroLicencia: "123456789",
+        numeroLicencia: "",
 	});
 
 	const [mensaje, setMensaje] = useState("");
@@ -55,7 +55,7 @@ export const ModalConductor = ({ isOpen, onClose, mutateInfoClients, initialData
 				curp: "",
                 direccionCasa: "",
                 salario: "1",
-                numeroLicencia: "123456789",
+                numeroLicencia: "",
 			});
 		}
 	}, [action, initialData, mutate]);
@@ -76,7 +76,6 @@ export const ModalConductor = ({ isOpen, onClose, mutateInfoClients, initialData
         }
 
 		if (isNaN(Date.parse(info.fechaNacimiento))) {
-			console.log(info.fechaNacimiento);
             setMensaje('El valor de la fecha de nacimiento debe presentar un formato de DD/MM/AA');
 			setMostrarAlerta(true);
 			return;
@@ -93,7 +92,7 @@ export const ModalConductor = ({ isOpen, onClose, mutateInfoClients, initialData
 						curp: "",
                         direccionCasa: "",
                         salario: "1",
-                        numeroLicencia: "123456789",
+                        numeroLicencia: "",
 					});
 	
 					onClose();
@@ -116,7 +115,7 @@ export const ModalConductor = ({ isOpen, onClose, mutateInfoClients, initialData
 						curp: "",
                         direccionCasa: "",
                         salario: "1",
-                        numeroLicencia: "123456789",
+                        numeroLicencia: "",
 					});
 	
 					onClose();
