@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Build, Package & Tag') {
             steps {
-                sh "sudo docker build -t $IMAGE_TAG ."
+                sh "docker build -t $IMAGE_TAG ."
             }
         }
         stage('Deploy') {
@@ -17,12 +17,12 @@ pipeline {
                 script {
                     CONTAINER_ID = sh(script: "sudo docker ps -a -q --filter=\"name=$CONTAINER_NAME\"", returnStdout: true).trim()
                     if (CONTAINER_ID) {
-                        sh "sudo docker stop $CONTAINER_ID"
-                        sh "sudo docker rm $CONTAINER_ID"
+                        sh "docker stop $CONTAINER_ID"
+                        sh "docker rm $CONTAINER_ID"
                     } else {
                         echo "El contenedor no existe."
                     }
-                    sh "sudo docker run -d --name $CONTAINER_NAME --network devops -p 8081:8081 $CONTAINER_NAME:1.0.0-${BUILD_NUMBER}"
+                    sh "docker run -d --name $CONTAINER_NAME --network devops -p 8081:8081 $CONTAINER_NAME:1.0.0-${BUILD_NUMBER}"
                 }
             }
         }
