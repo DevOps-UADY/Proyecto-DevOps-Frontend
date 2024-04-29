@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    CONTAINER_ID = sh(script: "sudo docker ps -a -q --filter=\"name=$CONTAINER_NAME\"", returnStdout: true).trim()
+                    CONTAINER_ID = sh(script: "docker ps -a -q --filter=\"name=$CONTAINER_NAME\"", returnStdout: true).trim()
                     if (CONTAINER_ID) {
                         sh "docker stop $CONTAINER_ID"
                         sh "docker rm $CONTAINER_ID"
