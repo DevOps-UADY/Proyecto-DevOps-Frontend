@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { HiInformationCircle } from "react-icons/hi";
 import { useForm } from "react-hook-form";
@@ -20,12 +20,12 @@ export const Singup = () => {
         formState: { errors },
       } = useForm<MyInputTypes>();
 
-      const submit = async (data:any) => {
+      const submit = async (data:MyInputTypes) => {
         
      
         
         try {
-            const response = await axios.post("http://localhost:3000/usuarios/register",data)
+            await axios.post("http://localhost:3000/usuarios/register",data)
         } catch (error:any) {
             console.log(error.response.data.message)
             setfirst(error.response.data.message)
@@ -62,7 +62,7 @@ export const Singup = () => {
       </div>
       <Button type="submit">Registrarse</Button>
 
-      {first.map((element, index) => (
+      {first.map((element) => (
          <Alert color="failure" icon={HiInformationCircle}>
          <span className="font-medium"> {element} </span> 
        </Alert>

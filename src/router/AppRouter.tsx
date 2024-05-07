@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '../Layout'
 import { Conductores, Dashboard, Rutas } from '../pages'
@@ -7,7 +7,7 @@ import { Login } from '../pages/Login'
 
 export const AppRouter = () => {
 
-    const [auth, setauth] = useState(false)
+    const [auth] = useState(false)
   return (
    <>
    <Routes>
