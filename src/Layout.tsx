@@ -4,6 +4,7 @@ import { Navbard } from "./components";
 export function Layout() {
 	return (
 		<div className="min-h-full">
+			
 			<Navbard />
 			<main>
 				<Outlet />
