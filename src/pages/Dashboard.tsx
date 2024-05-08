@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Ruta as IRuta } from "../interfaces";
 import { Conductor as IConductor} from "../interfaces";
 import {useGetConductores, useGetRutas } from "../api";
-import { Usuarios } from '../interfaces/index';
 import { useGetUsuarios } from '../api/usuarios';
 
 export const Dashboard = () => {
@@ -30,7 +29,7 @@ export const Dashboard = () => {
             }
         });
 
-    }, [mutateRutas, mutateConductores,useGetUsuarios]);
+    }, [mutateRutas, mutateConductores,mutateUsuarios]);
 
     return (
         <>

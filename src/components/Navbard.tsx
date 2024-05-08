@@ -18,13 +18,13 @@ jwt:"xxxxxxx"
   })
   useEffect(() => {
     const data: Usuario | null = JSON.parse(localStorage.getItem("data") || 'null');
-    console.log(data)
+   
     if(data){
       
       setfirst(data)
     }
- console.log({first})
-  }, [ ])
+
+  }, [])
   
   const navigate= useNavigate();
   const logout = () =>{
