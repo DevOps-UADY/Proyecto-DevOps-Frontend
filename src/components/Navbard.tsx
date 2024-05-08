@@ -3,9 +3,35 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Logo from "../assets/favicon.svg";
 
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Usuario } from "../interfaces";
 
-export function Navbard() {
+export function Navbard({setIsAuthenticated}:LayoutProps) {
+  const [first, setfirst] = useState<Usuario>({
+
+    id:"test",
+    correo:"werwer",
+    contrasenia:"wwww",
+codigoInvitacion:"swwww",
+jwt:"xxxxxxx"
+  })
+  useEffect(() => {
+    const data: Usuario | null = JSON.parse(localStorage.getItem("data") || 'null');
+    console.log(data)
+    if(data){
+      
+      setfirst(data)
+    }
+ console.log({first})
+  }, [ ])
+  
+  const navigate= useNavigate();
+  const logout = () =>{
+    setIsAuthenticated(false)
+            navigate('/login')
+            return redirect('/login');
+  }
   return (
     <Navbar fluid rounded className="bg-red-200">
       <Navbar.Brand href="https://flowbite-react.com">
@@ -21,14 +47,14 @@ export function Navbard() {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
-            <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+            <span className="block text-sm">{first.correo}</span>
+            
           </Dropdown.Header>
           <Dropdown.Item as={Link} to="/dashboard">Dashboard</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/settings">Settings</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/earnings">Earnings</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/configuracion">Configuracion</Dropdown.Item>
+        
           <Dropdown.Divider />
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item onClick={logout}>Cerrar Sesión</Dropdown.Item>
         </Dropdown>
         <Navbar.Toggle />
       </div>
@@ -41,4 +67,7 @@ export function Navbard() {
       </Navbar.Collapse>
     </Navbar>
   );
+}
+interface LayoutProps {
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
