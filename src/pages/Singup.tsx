@@ -54,7 +54,7 @@ export const Singup = () => {
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="password1" value="Your password" />
+          <Label htmlFor="password1" value="Tu contraseña" />
         </div>
         <TextInput id="contrasenia" type="password" required  {...register('contrasenia')}  />
      
