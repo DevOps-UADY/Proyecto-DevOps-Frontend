@@ -29,8 +29,8 @@ export const Login = ({setIsAuthenticated}:LayoutProps) => {
             localStorage.setItem('jwt',jwt)
             console.log(response.data)
             setIsAuthenticated(true)
-            navigate('/')
-            return redirect('/');
+            navigate('/dashboard')
+            return redirect('/dashboard');
        
         } catch (error:any) {
            console.log(error)
