@@ -2,7 +2,8 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from "react";
 import { Ruta as IRuta } from "../interfaces";
 import { Conductor as IConductor} from "../interfaces";
-import {useGetConductores, useGetRutas } from "../api";
+import { Asignacion as IAsignacion } from '../interfaces';
+import {useGetConductores, useGetRutas, useGetAsignaciones} from "../api";
 import { useGetUsuarios } from '../api/usuarios';
 
 export const Dashboard = () => {
@@ -12,6 +13,8 @@ export const Dashboard = () => {
     const { mutate:mutateConductores } = useGetConductores();
     const { mutate: mutateUsuarios } = useGetUsuarios();
     const [usuarios,setUsuarios] = useState<number>()
+    const { mutate:mutateAsignaciones } = useGetAsignaciones();
+    const [asignaciones, setAsignaciones] = useState<IAsignacion[]>([]);
     useEffect(() => {
         mutateRutas("", {
             onSuccess: (data) => {
@@ -28,8 +31,13 @@ export const Dashboard = () => {
                 setUsuarios(data);
             }
         });
+        mutateAsignaciones("", {
+            onSuccess: (data) => {
+                setAsignaciones(data);
+            }
+        });
 
-    }, [mutateRutas, mutateConductores,mutateUsuarios]);
+    }, [mutateRutas, mutateConductores,mutateUsuarios, mutateAsignaciones]);
 
     return (
         <>
@@ -52,7 +60,11 @@ export const Dashboard = () => {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de usuarios existentes</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{usuarios}</dd>
-                    </div>           
+                    </div>
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de asignaciones existentes</dt>
+                        <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{asignaciones.length}</dd>
+                    </div>             
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-lg font-medium leading-6 text-gray-900">Application for</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>

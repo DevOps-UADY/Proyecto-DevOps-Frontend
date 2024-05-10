@@ -51,3 +51,44 @@ export interface Usuarios {
     correo:           string;
     codigoInvitacion: string;
 }
+
+export interface Vehiculo {
+    id: string;
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+    fechaIngresoSistema: Date;
+}
+
+export interface VehiculoDTO {
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+}
+
+export interface Asignacion{
+    id: string;
+    vehiculoAsociado: Vehiculo;
+    conductorAsociado: Conductor;
+    idRuta: string;
+    fechaAsignacionVinculacion: Date;
+    enFuncionamiento: boolean;
+}
+
+
+export interface AsignacionDTO{
+    vehiculoAsociado: Vehiculo;
+    conductorAsociado: Conductor;
+    idRuta: string;
+    enFuncionamiento: boolean;
+}
