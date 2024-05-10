@@ -1,12 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-import { Layout } from "./Layout.tsx";
-import { Rutas, Dashboard, Conductores } from "./pages";
 import './index.css'
+import { App } from './App.tsx';
+/*
+//const [isAuthenticated, setIsAuthenticated] = useState(false);
+const navigate = useNavigate();
 
+const checkAuth = () => {
+    if (!isAuthenticated) {
+      navigate("/login"); // Redirigir a la página de inicio de sesión si el usuario no está autenticado
+    }
+	return false;
+  };
+*/
+/*
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -15,25 +24,30 @@ const router = createBrowserRouter([
 			{
 				path: "Dashboard",
 				element: <Dashboard />,
+			
 			},
 			{
 				path: "Rutas",
 				element: <Rutas />,
+				
 			},
 			{
 				path: "Conductores",
 				element: <Conductores />,
+			
 			},
 		],
 	},
 ]);
-
+*/
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
+		<BrowserRouter>
+			<App></App>
+		</BrowserRouter>
 		</QueryClientProvider>
 	</React.StrictMode>,
 );

@@ -38,3 +38,16 @@ export interface ConductorDTO {
     numeroLicencia: number;
 }
 
+export interface Usuario {
+    id:               string;
+    correo:           string;
+    contrasenia:      string;
+    codigoInvitacion: string;
+    jwt:              string;
+}
+
+export interface Usuarios {
+    id:               string;
+    correo:           string;
+    codigoInvitacion: string;
+}

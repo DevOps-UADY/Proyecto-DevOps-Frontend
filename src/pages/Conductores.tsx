@@ -68,6 +68,7 @@ export const Conductores = () => {
 
     return (
         <>
+     
         <ModalConductor isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} initialData={idConductor} action={accion} />
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
