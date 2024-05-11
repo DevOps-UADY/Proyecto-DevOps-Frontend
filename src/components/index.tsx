@@ -17,3 +17,6 @@ export * from "./DropDownR"
 
 // Recorridos
 export * from "./RecorridoRow";
+export * from "./AddRecorridoButton";
+export * from "./ModalRecorridoCrear";
+export * from "./ModalRecorridoActualizar";

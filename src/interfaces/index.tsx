@@ -105,9 +105,9 @@ export interface Recorridos{
 }
 
 export interface RecorridosDTO{
-    asignacionId: Asignacion;
+    asignacionId: number;
     rutaId: number;
     fechaRecorrido: string;
-    exito: boolean;
-    comentarios: string;
+    exito?: boolean;
+    comentarios?: string;
 }
