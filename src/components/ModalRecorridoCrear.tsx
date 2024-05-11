@@ -61,7 +61,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 						htmlFor="rutaId"
 						className="block mb-2 text-sm font-medium"
 					>
-						Ruta
+						Recorrido
 					</label>
 					<Select 
 						id="rutaId" 

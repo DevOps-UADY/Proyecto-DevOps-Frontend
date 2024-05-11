@@ -1,5 +1,5 @@
 "use client";
-import { SearchForm, AddRecorridoButton, DropDownR, RecorridoRow, ModalRecorridoCrear } from "../components";
+import { SearchForm, AddRecorridoButton, DropDownR, RecorridoRow, ModalRecorridoCrear, ModalRecorridoActualizar } from "../components";
 import { Table } from "flowbite-react";
 import { useToggle } from "../hooks";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { HiCheck, HiExclamation} from "react-icons/hi";
 
 export const Recorridos = () => {
     const [isOpen, toogleIsOpen] = useToggle();
+    const [isOpenActualizar, toogleIsOpenActualizar] = useToggle();
     const [recorridos, setRecorridos] = useState<IRecorrido[]>([]);
     const { mutate } = useGetRecorridos();
     const { mutate: getRutas } = useGetRutas();
@@ -28,7 +29,7 @@ export const Recorridos = () => {
     const handleEditarClick = (id: number) => {
         console.log(idRecorrido);
         setIdRecorrido(id);
-        toogleIsOpen();
+        toogleIsOpenActualizar();
     }
 
     const handleEliminarClick = (id: number) => {
@@ -97,6 +98,7 @@ export const Recorridos = () => {
     return (
         <>
         <ModalRecorridoCrear isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} rutasArreglo={rutas} asignacionArreglo={asignacion}/>
+        <ModalRecorridoActualizar isOpen={isOpenActualizar} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpenActualizar()} rutasArreglo={rutas} asignacionArreglo={asignacion}/>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

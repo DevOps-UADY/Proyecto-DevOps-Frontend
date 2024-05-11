@@ -1,126 +1,56 @@
 import { Modal } from "./Modal";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { TextInput, Select } from "flowbite-react";
-import { useCreateRecorrido, useGetRecorridoById, useUpdateRecorrido } from "../api";
+import { useCreateRecorrido } from "../api";
 import { Alert } from "flowbite-react";
+import { Ruta as IRuta, Asignacion as IAsignacion } from "../interfaces";
 
 interface Props {
 	isOpen: boolean;
 	onClose: () => void;
 	mutateInfoClients: () => void;
-	initialData: number;
-	action: number;
+	rutasArreglo: IRuta[];
+	asignacionArreglo: IAsignacion[];
 }
 
-export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, initialData, action }: Props) => {
+export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo }: Props) => {
 	const createRuta = useCreateRecorrido();
-	const {mutate} = useGetRecorridoById();
-	const updateRuta = useUpdateRecorrido();
+	console.log(asignacionArreglo);
+		
 
 	const [info, setInfo] = useState({
-		asignacionId: 0,
-		rutaId: 0,
-		fechaRecorrido: "2024-04-04",
-		exito: true,
-        comentarios: "",
+		asignacionId: "0",
+		rutaId: "0",
+		fechaRecorrido: "2024-04-04"
 	});
 
 	const [mensaje, setMensaje] = useState("");
 	const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
-	useEffect(() => {
-        // 1 editar
-		if (action===1) {
-			mutate(
-					initialData, 
-				{
-					onSuccess: (data) => setInfo({
-						asignacionId: data.auxAsignacion,
-						rutaId: data.rutaId,
-						fechaRecorrido: data.fechaRecorrido,
-                        exito: data.exito,
-						comentarios: data.comentarios,
-					},),
-					onError: (error) => {
-						setMensaje(error.message);
-						setMostrarAlerta(true);
-					}
-				}
-			);
-		}else{
-			setInfo({
-                asignacionId: 0,
-                rutaId: 0,
-                fechaRecorrido: "2024-04-04",
-                exito: true,
-                comentarios: ""
-			});
-		}
-	}, [action, initialData, mutate]);
-
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		const latitudValue = parseFloat(info.latitudDestino);
-		if (isNaN(latitudValue) || latitudValue < -90 || latitudValue > 90) {
-			setMensaje('El valor de la latitud debe ser un número válido entre -90 y 90');
+		
+		if (isNaN(Date.parse(info.fechaRecorrido))) {
+            setMensaje('El valor de la fecha de nacimiento debe presentar un formato de DD/MM/AA');
 			setMostrarAlerta(true);
 			return;
-		}
+        }
 
-		const lonfitugValue = parseInt(info.longitudDestino);
-		if (isNaN(lonfitugValue) || lonfitugValue < -180 || lonfitugValue > 180) {
-			setMensaje('El valor de la longitud debe estar entre -180 y 180');
-			setMostrarAlerta(true);
-			return;
-		}
+		createRuta.mutate({...info, asignacionId: Number(info.asignacionId), rutaId: Number(info.rutaId)}, {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			onSuccess: (_received) => {
 
-		
-		if (action === 1){
-			updateRuta.mutate({rutaId: initialData, ruta: {...info, latitudDestino: parseFloat(info.latitudDestino), longitudDestino: parseFloat(info.longitudDestino)}}, {
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				onSuccess: (_received) => {
-	
-					setInfo({
-						asignacionId: 0,
-                        rutaId: 0,
-                        fechaRecorrido: "2024-04-04",
-                        exito: true,
-                        comentarios: ""
-					});
-	
-					onClose();
-	
-					mutateInfoClients();
-				},
-				onError: (error) => {
-					setMensaje(error.message);
-					setMostrarAlerta(true);
-				}
-			});
-		} else {
-			createRuta.mutate({...info, latitudDestino: parseFloat(info.latitudDestino), longitudDestino: parseFloat(info.longitudDestino)}, {
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				onSuccess: (_received) => {
-	
-					setInfo({
-						asignacionId: 0,
-                        rutaId: 0,
-                        fechaRecorrido: "2024-04-04",
-                        exito: true,
-                        comentarios: ""
-					});
-	
-					onClose();
-	
-					mutateInfoClients();
-				},
-				onError: (error) => {
-					setMensaje(error.message);
-					setMostrarAlerta(true);
-				},
-			});
-		}
-		
+				onClose();
+
+				mutateInfoClients();
+			},
+			onError: (error) => {
+				console.log(error);
+				
+				setMensaje(error.message);
+				setMostrarAlerta(true);
+			},
+		});	
 	}
 
 	return (
@@ -128,37 +58,44 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, i
 			<form onSubmit={onSubmit}>
 				<div className="mb-6">
 					<label
-						htmlFor="nombreRuta"
+						htmlFor="rutaId"
 						className="block mb-2 text-sm font-medium"
 					>
-						Nombre de la ruta
+						Editar recorrido
 					</label>
-					<input
-						className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-						id="nombreRuta"
-						placeholder="Las americas"
+					<Select 
+						id="rutaId" 
+						name="rutaId"
 						required
-						name="nombreRuta"
-						type="text"
-						value={info.nombreRuta}
-						onChange={(e)=> setInfo({...info, nombreRuta: e.target.value})}
-					/>
+						onChange={(e) => setInfo({...info, rutaId: e.target.value})}
+						>
+							<option selected>Elegir ruta</option>
+							{rutasArreglo.map((ruta) => (
+								<option key={ruta.id} value={ruta.id}>
+								{ruta.nombreRuta}
+								</option>
+							))}
+					</Select>
 				</div>
 				<div className="mb-6">
 					<label
 						htmlFor="estadoRuta"
 						className="block mb-2 text-sm font-medium"
 					>
-						Estado de la ruta
+						Asignacion
 					</label>
-					<Select
-						id="estadoRuta"
+					<Select 
+						id="asignacionId" 
+						name="asignacionId"
 						required
-						value={info.estadoRuta.toString()}
-						onChange={(e) => setInfo({...info, estadoRuta: e.target.value === "true"})}
-					>
-						<option value="true">true</option>
-						<option value="false">false</option>
+						onChange={(e) => setInfo({...info, asignacionId: e.target.value})}
+						>
+							<option selected>Elegir asignacion</option>
+							{asignacionArreglo.map((asignacion) => (
+								<option key={asignacion.id} value={asignacion.id}>
+								{asignacion.id}
+								</option>
+							))}
 					</Select>
 				</div>
 				<div className="mb-6">
@@ -166,33 +103,16 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, i
 						htmlFor="latitudDestino"
 						className="block mb-2 text-sm font-medium"
 					>
-						Latitud de destino
+						Fecha de recorrido
 					</label>
 					<TextInput
-					id="latitudDestino"
-					name="latitudDestino"
-					placeholder="90" 
+					id="fechaRecorrido"
+					name="fechaRecorrido"
+					placeholder="2024-04-04" 
 					required
 					type="text"
-					value={info.latitudDestino}
-					onChange={(e) => setInfo({...info, latitudDestino: e.target.value})} 
-					color="info" />
-				</div>
-				<div className="mb-6">
-					<label
-						htmlFor="longitudDestino"
-						className="block mb-2 text-sm font-medium"
-					>
-						Longitud de destino
-					</label>
-					<TextInput
-					id="longitudDestino"
-					name="longitudDestino"
-					placeholder="180" 
-					required
-					type="text"
-					value={info.longitudDestino}
-					onChange={(e) => setInfo({...info, longitudDestino: e.target.value})} 
+					value={info.fechaRecorrido}
+					onChange={(e) => setInfo({...info, fechaRecorrido: e.target.value})} 
 					color="info" />
 				</div>
 				{mostrarAlerta && (
