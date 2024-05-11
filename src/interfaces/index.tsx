@@ -38,6 +38,30 @@ export interface ConductorDTO {
     numeroLicencia: number;
 }
 
+export interface Vehiculo {
+    id: number;
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+    fechaIngresoSistema: Date;
+}
+
+export interface VehiculoDTO {
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+}
+
 export interface Usuario {
     id:               string;
     correo:           string;
