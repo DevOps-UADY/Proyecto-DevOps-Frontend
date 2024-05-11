@@ -20,5 +20,5 @@ export * from "./DropDownR"
 export * from "./SearchForm";
 export * from "./AddVehiculoButton";
 export * from "./VehiculoRow";
-// export * from "./ModalVehiculo";
+export * from "./ModalVehiculo";
 export * from "./DropDownR"

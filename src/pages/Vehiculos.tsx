@@ -17,15 +17,15 @@ export const Vehiculos = () => {
     const [toast, setToast] = useState(false);
     const [toastError, setToastError] = useState(false);
     const [accion, setAccion] = useState<number>(0);
-    const [idVehiculo, setIdVehiculo] = useState<string>("");
+    const [idVehiculo, setIdVehiculo] = useState<number>(0);
 
-    const handleEditarClick = (id: string) => {
+    const handleEditarClick = (id: number) => {
         setAccion(1);
         setIdVehiculo(id);
         toggleIsOpen();
     }
 
-    const handleEliminarClick = (id: string) => {
+    const handleEliminarClick = (id: number) => {
         deleteVehiculo(id, {
             onSuccess: () => {
                 mutateInfoVehiculos();
@@ -44,7 +44,10 @@ export const Vehiculos = () => {
     useEffect(() => {
         mutate("", {
             onSuccess: (data) => {
+                console.log("Seteando vehiculos")
+                
                 setVehiculos(data);
+                console.log(vehiculos)
                 if (data.length === 0) {
                     setToastError(true);
                 }
@@ -133,3 +136,5 @@ export const Vehiculos = () => {
         </>
     );
 };
+
+

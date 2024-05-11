@@ -4,22 +4,23 @@ import { httpClient } from "./http";
 
 export const useGetVehiculos = () => {
 	return useMutation({
-		mutationKey: ["Conductores"],
+		mutationKey: ["Vehiculos"],
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		mutationFn: async(_id: string) => {
-			const {data} = await  httpClient.get<Vehiculo[]>("/conductores",{
+			const {data} = await  httpClient.get("/vehiculos",{
             })
-            return data;
+			console.log(data)
+            return data.data;
 		}
 	});
 }
 
 export const useCreateVehiculo = () => {
 	return useMutation({
-		mutationKey: ["Conductores"],
-		mutationFn: async (conductor: Omit<VehiculoDTO, "id">) => {
-			const { data } = await httpClient.post<VehiculoDTO>("/conductores", {
-				...conductor,
+		mutationKey: ["Vehiculos"],
+		mutationFn: async (vehiculo: Omit<VehiculoDTO, "id">) => {
+			const { data } = await httpClient.post<VehiculoDTO>("/vehiculos", {
+				...vehiculo,
 			});
 
 			return data;
@@ -29,9 +30,9 @@ export const useCreateVehiculo = () => {
 
 export const useGetVehiculoById = () => {
 	return useMutation({
-		mutationKey: ["Conductores"],
-		mutationFn: async (conductorId: number) => {
-			const { data } = await httpClient.get<Vehiculo>(`/conductores/${conductorId}`);
+		mutationKey: ["Vehiculos"],
+		mutationFn: async (vehicuId: number) => {
+			const { data } = await httpClient.get<Vehiculo>(`/vehiculos/${vehicuId}`);
 			return data;
 		},
 	});
@@ -40,9 +41,9 @@ export const useGetVehiculoById = () => {
 
 export const useUpdateVehiculo = () => {
 	return useMutation({
-	mutationKey: ["Conductores"],
-	mutationFn: async ({ conductorId, conductor }: { conductorId: number, conductor: Omit<VehiculoDTO, "id"> }) => {
-		const { data } = await httpClient.put<VehiculoDTO>(`/conductores/${conductorId}`, conductor);
+	mutationKey: ["Vehiculos"],
+	mutationFn: async ({ vehiculoId, vehiculo }: { vehiculoId: number, vehiculo: Omit<VehiculoDTO, "id"> }) => {
+		const { data } = await httpClient.put<VehiculoDTO>(`/vehiculos/${vehiculoId}`, vehiculo);
 		return data;
 	},
 	});
@@ -50,9 +51,9 @@ export const useUpdateVehiculo = () => {
 
 export const useDeleteVehiculo = () => {
 	return useMutation({
-		mutationKey: ["Conductores"],
-		mutationFn: async (conductorId: number) => {
-			const { data } = await httpClient.delete<Vehiculo>(`/conductores/${conductorId}`);
+		mutationKey: ["Vehiculos"],
+		mutationFn: async (vehicuId: number) => {
+			const { data } = await httpClient.delete<Vehiculo>(`/vehiculos/${vehicuId}`);
 			return data;
 		},
 	});

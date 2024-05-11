@@ -39,7 +39,7 @@ export interface ConductorDTO {
 }
 
 export interface Vehiculo {
-    id: string;
+    id: number;
     marca: string;
     modelo: string;
     vin: string;
