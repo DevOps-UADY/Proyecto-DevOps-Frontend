@@ -18,6 +18,7 @@ export const Vehiculos = () => {
     const [toastError, setToastError] = useState(false);
     const [accion, setAccion] = useState<number>(0);
     const [idVehiculo, setIdVehiculo] = useState<number>(0);
+    const [errores, setErrores] = useState<string[]>([]);
 
     const handleEditarClick = (id: number) => {
         setAccion(1);
@@ -43,11 +44,9 @@ export const Vehiculos = () => {
 
     useEffect(() => {
         mutate("", {
-            onSuccess: (data) => {
-                console.log("Seteando vehiculos")
-                
+            onSuccess: (data) => {                
                 setVehiculos(data);
-                console.log(vehiculos)
+                // console.log(vehiculos)
                 if (data.length === 0) {
                     setToastError(true);
                 }
@@ -62,6 +61,7 @@ export const Vehiculos = () => {
         mutate("", {
             onSuccess: (data) => {
                 setVehiculos(data);
+                console.log(data);
             }
         });
         setToast(true);
@@ -69,7 +69,10 @@ export const Vehiculos = () => {
 
     return (
         <>
-            <ModalVehiculo isOpen={isOpen} mutateInfoVehiculos={mutateInfoVehiculos} onClose={() => toggleIsOpen()} initialData={idVehiculo} action={accion} />
+            <ModalVehiculo isOpen={isOpen} mutateInfoVehiculos={mutateInfoVehiculos} onClose={() => {
+        setErrores([]);
+        toggleIsOpen();
+    }}  initialData={idVehiculo} action={accion} setErrores={setErrores} errores={errores}/>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

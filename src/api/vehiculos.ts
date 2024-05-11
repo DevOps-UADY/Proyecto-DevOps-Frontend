@@ -9,7 +9,6 @@ export const useGetVehiculos = () => {
 		mutationFn: async(_id: string) => {
 			const {data} = await  httpClient.get("/vehiculos",{
             })
-			console.log(data)
             return data.data;
 		}
 	});
