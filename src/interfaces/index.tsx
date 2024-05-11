@@ -92,3 +92,22 @@ export interface AsignacionDTO{
     idRuta: string;
     enFuncionamiento: boolean;
 }
+
+export interface Recorridos{
+    id: number;
+    asignacion: Asignacion;
+    auxAsignacion: number;
+    rutaId: number;
+    fechaRecorrido: string;
+    exito: boolean;
+    comentarios: string;
+    fechaCreacion: Date;
+}
+
+export interface RecorridosDTO{
+    asignacionId: Asignacion;
+    rutaId: number;
+    fechaRecorrido: string;
+    exito: boolean;
+    comentarios: string;
+}

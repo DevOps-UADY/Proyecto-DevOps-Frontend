@@ -14,3 +14,6 @@ export * from "./AddConductorButton";
 export * from "./ConductorRow";
 export * from "./ModalConductor";
 export * from "./DropDownR"
+
+// Recorridos
+export * from "./RecorridoRow";
