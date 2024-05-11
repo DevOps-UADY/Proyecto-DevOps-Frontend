@@ -2,13 +2,15 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from "react";
 import { Ruta as IRuta } from "../interfaces";
 import { Conductor as IConductor} from "../interfaces";
-import {useGetConductores, useGetRutas } from "../api";
+import {useGetConductores, useGetRutas, useGetTotalVehiculos } from "../api";
 
 export const Dashboard = () => {
     const [rutas, setRutas] = useState<IRuta[]>([]);
     const { mutate: mutateRutas } = useGetRutas();
     const [conductores, setConductores] = useState<IConductor[]>([]);
     const { mutate:mutateConductores } = useGetConductores();
+    const [totalVehiculos, setTotalVehiculos] = useState(0);
+    const { mutate: mutateTotalVehiculos } = useGetTotalVehiculos();
     
     useEffect(() => {
         mutateRutas("", {
@@ -21,8 +23,13 @@ export const Dashboard = () => {
                 setConductores(data);
             }
         });
+        mutateTotalVehiculos("", {
+            onSuccess: (data) => {
+                setTotalVehiculos(data);
+            }
+        });
 
-    }, [mutateRutas, mutateConductores]);
+    }, [mutateRutas, mutateConductores, mutateTotalVehiculos]);
 
     return (
         <>
@@ -41,7 +48,11 @@ export const Dashboard = () => {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de conductores existentes</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{conductores.length}</dd>
-                    </div>        
+                    </div>      
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-lg font-medium leading-6 text-gray-900">Candidad de vehiculos existentes</dt>
+                        <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{totalVehiculos}</dd>
+                    </div>     
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-lg font-medium leading-6 text-gray-900">Application for</dt>
                         <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>

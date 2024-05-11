@@ -68,6 +68,7 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
         }
     }, [action, initialData, mutate]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -123,9 +124,11 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
     const {
         register,
         handleSubmit,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         formState: { errors },
       } = useForm();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const onSubmit2 = (data:any) =>{
         console.log({data})
         if(data.fechaCompra===""){
@@ -187,6 +190,7 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
                 });
         }        
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const objetoAFormData = (objeto:any) => {
         const formData = new FormData();
         

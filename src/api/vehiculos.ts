@@ -58,3 +58,14 @@ export const useDeleteVehiculo = () => {
 		},
 	});
 };
+
+export const useGetTotalVehiculos = () => {
+	return useMutation({
+		mutationKey: ["Vehiculos"],
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		mutationFn: async (_id: string) => {
+			const { data } = await httpClient.get<{ cantidad: number }>("/vehiculos/total");
+			return data.cantidad;
+		},
+	});
+};
