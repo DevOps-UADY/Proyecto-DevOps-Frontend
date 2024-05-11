@@ -29,7 +29,7 @@ export const Singup = () => {
             localStorage.setItem('auth', 'true');
             navigate('/login')
             return redirect('/login');
-       
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error:any) {
             console.log(error.response.data.message)
             setfirst(error.response.data.message)
