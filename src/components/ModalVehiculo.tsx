@@ -1,7 +1,7 @@
 import { Modal } from "./Modal";
 import { FormEvent, useState, useEffect } from "react";
-import { TextInput, Select } from "flowbite-react";
-import { useCreateVehiculo, useGetVehiculoById, useUpdateVehiculo } from "../api";
+// import { TextInput, Select } from "flowbite-react";
+import { useCreateVehiculo, useGetVehiculoById } from "../api";
 import { Alert } from "flowbite-react";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialData, action }: Props) => {
     const createVehiculo = useCreateVehiculo();
     const { mutate } = useGetVehiculoById();
-    const updateVehiculo = useUpdateVehiculo();
+    // const updateVehiculo = useUpdateVehiculo();
 
     const [info, setInfo] = useState({
         marca: "",
@@ -70,28 +70,28 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
         e.preventDefault();
 
         if (action === 1) {
-            updateVehiculo.mutate({ vehiculoId: initialData, vehiculo: info }, {
-                onSuccess: () => {
-                    setInfo({
-                        marca: "",
-                        modelo: "",
-                        vin: "",
-                        placa: "",
-                        fechaCompra: "",
-                        costo: 0,
-                        fotografia: "",
-                        estatusAsignacion: true,
-                    });
+            // updateVehiculo.mutate({ vehiculoId: initialData, vehiculo: info }, {
+            //     onSuccess: () => {
+            //         setInfo({
+            //             marca: "",
+            //             modelo: "",
+            //             vin: "",
+            //             placa: "",
+            //             fechaCompra: "",
+            //             costo: 0,
+            //             fotografia: "",
+            //             estatusAsignacion: true,
+            //         });
 
-                    onClose();
+            //         onClose();
 
-                    mutateInfoVehiculos();
-                },
-                onError: (error) => {
-                    setMensaje(error.message);
-                    setMostrarAlerta(true);
-                }
-            });
+            //         mutateInfoVehiculos();
+            //     },
+            //     onError: (error) => {
+            //         setMensaje(error.message);
+            //         setMostrarAlerta(true);
+            //     }
+            // });
         } else {
             createVehiculo.mutate(info, {
                 onSuccess: () => {
