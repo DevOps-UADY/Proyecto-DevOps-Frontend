@@ -18,6 +18,7 @@ export const Login = ({setIsAuthenticated}:LayoutProps) => {
       
       } = useForm();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const submit = async (data:any) => {   
         try {
            const response =  await axios.post("http://localhost:3000/usuarios/login",data)
@@ -31,7 +32,7 @@ export const Login = ({setIsAuthenticated}:LayoutProps) => {
             setIsAuthenticated(true)
             navigate('/dashboard')
             return redirect('/dashboard');
-       
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error:any) {
            console.log(error)
            
