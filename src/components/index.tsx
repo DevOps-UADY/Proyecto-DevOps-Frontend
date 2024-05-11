@@ -14,3 +14,11 @@ export * from "./AddConductorButton";
 export * from "./ConductorRow";
 export * from "./ModalConductor";
 export * from "./DropDownR"
+
+// Vehiculos
+
+export * from "./SearchForm";
+export * from "./AddVehiculoButton";
+export * from "./VehiculoRow";
+// export * from "./ModalVehiculo";
+export * from "./DropDownR"
