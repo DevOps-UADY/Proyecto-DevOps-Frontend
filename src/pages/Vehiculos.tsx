@@ -56,7 +56,7 @@ export const Vehiculos = () => {
                 setToastError(true);
             }
         });
-    }, [mutate]);
+    }, [mutate, vehiculos]);
 
     const mutateInfoVehiculos = () => {
         mutate("", {
