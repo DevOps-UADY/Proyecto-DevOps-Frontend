@@ -44,10 +44,8 @@ export const Vehiculos = () => {
     useEffect(() => {
         mutate("", {
             onSuccess: (data) => {
-                console.log("Seteando vehiculos")
                 
                 setVehiculos(data);
-                console.log(vehiculos)
                 if (data.length === 0) {
                     setToastError(true);
                 }
@@ -56,7 +54,7 @@ export const Vehiculos = () => {
                 setToastError(true);
             }
         });
-    }, [mutate, vehiculos]);
+    }, [mutate]);
 
     const mutateInfoVehiculos = () => {
         mutate("", {
