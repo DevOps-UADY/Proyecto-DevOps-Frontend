@@ -4,9 +4,9 @@ import { Table } from "flowbite-react";
 import { useToggle } from "../hooks";
 import { useEffect, useState } from "react";
 import { Recorridos as IRecorrido } from "../interfaces";
-import { useGetRecorridos, useDeleteRecorrido, useGetRutas } from "../api";
+import { useGetRecorridos, useDeleteRecorrido, useGetRutas, useGetAsignaciones } from "../api";
 import { Toast } from "flowbite-react";
-import { Ruta as IRuta} from "../interfaces";
+import { Ruta as IRuta, Asignacion} from "../interfaces";
 import { HiCheck, HiExclamation} from "react-icons/hi";
 
 
@@ -15,7 +15,9 @@ export const Recorridos = () => {
     const [recorridos, setRecorridos] = useState<IRecorrido[]>([]);
     const { mutate } = useGetRecorridos();
     const { mutate: getRutas } = useGetRutas();
+    const { mutate: getAsignaciones } = useGetAsignaciones();
     const [rutas, setRutas] = useState<IRuta[]>([]);
+    const [asignacion, setAsignacion] = useState<Asignacion[]>([]);
     const { mutate: deleteRecorrido } = useDeleteRecorrido();
     const [filtro, setFiltro] = useState<string>("");
     const [toast, setToast] = useState(false);
@@ -44,6 +46,18 @@ export const Recorridos = () => {
         getRutas("", {
             onSuccess: (data) => {
                 setRutas(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+
+        getAsignaciones("", {
+            onSuccess: (data) => {
+                setAsignacion(data);
                 if(data.length === 0){
                     setToastError(true);
                 }
@@ -82,7 +96,7 @@ export const Recorridos = () => {
 
     return (
         <>
-        <ModalRecorridoCrear isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} rutasArreglo={rutas}/>
+        <ModalRecorridoCrear isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} rutasArreglo={rutas} asignacionArreglo={asignacion}/>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

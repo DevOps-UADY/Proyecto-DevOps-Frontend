@@ -78,8 +78,8 @@ export interface VehiculoDTO {
 
 export interface Asignacion{
     id: string;
-    vehiculoAsociado: Vehiculo;
-    conductorAsociado: Conductor;
+    vehiculo: Vehiculo;
+    conductor: Conductor;
     idRuta: string;
     fechaAsignacionVinculacion: Date;
     enFuncionamiento: boolean;

@@ -1,20 +1,21 @@
 import { Modal } from "./Modal";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { TextInput, Select } from "flowbite-react";
 import { useCreateRecorrido } from "../api";
 import { Alert } from "flowbite-react";
-import { Ruta as IRuta } from "../interfaces";
+import { Ruta as IRuta, Asignacion as IAsignacion } from "../interfaces";
 
 interface Props {
 	isOpen: boolean;
 	onClose: () => void;
 	mutateInfoClients: () => void;
 	rutasArreglo: IRuta[];
+	asignacionArreglo: IAsignacion[];
 }
 
-export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasArreglo }: Props) => {
+export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo }: Props) => {
 	const createRuta = useCreateRecorrido();
-	console.log(rutasArreglo);
+	console.log(asignacionArreglo);
 		
 
 	const [info, setInfo] = useState({
@@ -26,31 +27,26 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 	const [mensaje, setMensaje] = useState("");
 	const [mostrarAlerta, setMostrarAlerta] = useState(false);
 
-	useEffect(() => {
-		setInfo({
-            asignacionId: "0",
-            rutaId: "0",
-            fechaRecorrido: "2024-04-04"
-		});
-	}, []);
-
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+		
+		if (isNaN(Date.parse(info.fechaRecorrido))) {
+            setMensaje('El valor de la fecha de nacimiento debe presentar un formato de DD/MM/AA');
+			setMostrarAlerta(true);
+			return;
+        }
+
 		createRuta.mutate({...info, asignacionId: Number(info.asignacionId), rutaId: Number(info.rutaId)}, {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			onSuccess: (_received) => {
-
-				setInfo({
-					asignacionId: "0",
-					rutaId: "0",
-					fechaRecorrido: "2024-04-04"
-				});
 
 				onClose();
 
 				mutateInfoClients();
 			},
 			onError: (error) => {
+				console.log(error);
+				
 				setMensaje(error.message);
 				setMostrarAlerta(true);
 			},
@@ -67,23 +63,18 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 					>
 						Ruta
 					</label>
-					<input
-						className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-						id="rutaId"
-						placeholder="Las americas"
-						required
+					<Select 
+						id="rutaId" 
 						name="rutaId"
-						type="text"
-						value={info.rutaId}
-						onChange={(e)=> setInfo({...info, rutaId: e.target.value})}
-					/>
-					<Select id="countries" required>
-						<option selected>Choose a route</option>
-						{rutasArreglo.map((ruta) => (
-							<option key={ruta.id} value={ruta.id}>
-							{ruta.nombreRuta}
-							</option>
-						))}
+						required
+						onChange={(e) => setInfo({...info, rutaId: e.target.value})}
+						>
+							<option selected>Elegir ruta</option>
+							{rutasArreglo.map((ruta) => (
+								<option key={ruta.id} value={ruta.id}>
+								{ruta.nombreRuta}
+								</option>
+							))}
 					</Select>
 				</div>
 				<div className="mb-6">
@@ -93,25 +84,19 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 					>
 						Asignacion
 					</label>
-					<input
-						className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-						id="asignacionId"
-						placeholder="Las americas"
-						required
+					<Select 
+						id="asignacionId" 
 						name="asignacionId"
-						type="text"
-						value={info.asignacionId}
-						onChange={(e)=> setInfo({...info, asignacionId: e.target.value})}
-					/>
-					{/* <Select
-						id="asignacionId"
 						required
-						value={info.asignacionId}
 						onChange={(e) => setInfo({...info, asignacionId: e.target.value})}
-					>
-						<option value="true">true</option>
-						<option value="false">false</option>
-					</Select> */}
+						>
+							<option selected>Elegir asignacion</option>
+							{asignacionArreglo.map((asignacion) => (
+								<option key={asignacion.id} value={asignacion.id}>
+								{asignacion.id}
+								</option>
+							))}
+					</Select>
 				</div>
 				<div className="mb-6">
 					<label
@@ -123,7 +108,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 					<TextInput
 					id="fechaRecorrido"
 					name="fechaRecorrido"
-					placeholder="90" 
+					placeholder="2024-04-04" 
 					required
 					type="text"
 					value={info.fechaRecorrido}
