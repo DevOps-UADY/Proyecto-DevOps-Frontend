@@ -78,6 +78,7 @@ export interface VehiculoDTO {
 
 export interface Asignacion{
     id: string;
+    idRuta: string;
     vehiculo?: Vehiculo;
     conductor?: Conductor;
     enFuncionamiento?: boolean;
@@ -90,3 +91,21 @@ export interface AsignacionDTO{
     enFuncionamiento?: boolean;
 }
 
+export interface Recorridos{
+    id: number;
+    asignacion?: Asignacion;
+    auxAsignacion?: number;
+    rutaId: number;
+    fechaRecorrido: string;
+    exito: boolean;
+    comentario: string;
+    fechaCreacion: Date;
+}
+
+export interface RecorridosDTO{
+    asignacionId?: number;
+    rutaId?: number;
+    fechaRecorrido?: string;
+    exito?: boolean;
+    comentario?: string;
+}

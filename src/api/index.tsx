@@ -2,4 +2,5 @@
 export * from "./rutas";
 export * from "./conductores";
 export * from "./asignaciones";
+export * from "./recorridos";
 export * from "./vehiculos";

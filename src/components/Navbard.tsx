@@ -64,6 +64,7 @@ jwt:"xxxxxxx"
         <Navbar.Link as={Link} to="/conductores">Conductores</Navbar.Link>
         <Navbar.Link as={Link} to="#">Vehiculos</Navbar.Link>
         <Navbar.Link as={Link} to="/asignaciones">Asignacciones</Navbar.Link>
+        <Navbar.Link as={Link} to="/recorridos">Recorridos</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

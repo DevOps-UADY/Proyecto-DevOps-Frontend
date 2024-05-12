@@ -15,6 +15,11 @@ export * from "./ConductorRow";
 export * from "./ModalConductor";
 export * from "./DropDownR"
 
+export * from "./RecorridoRow";
+export * from "./AddRecorridoButton";
+export * from "./ModalRecorridoCrear";
+export * from "./ModalRecorridoActualizar";
+
 // Asignaciones
 export * from "./SearchForm";
 export * from "./AddAsignacionButton";
