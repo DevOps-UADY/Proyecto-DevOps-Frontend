@@ -4,6 +4,7 @@ import { Layout } from '../Layout'
 import { Conductores, Dashboard, Rutas, Asignaciones, Recorridos } from '../pages'
 import { Singup } from '../pages/Singup'
 import { Login } from '../pages/Login'
+import { Vehiculos } from '../pages/Vehiculos'
 import { Configuracion } from '../pages/Configuracion'
 
 
@@ -23,6 +24,7 @@ export const AppRouter = () => {
               <Route  path="dashboard" element={<Dashboard />} />
               <Route path="conductores" element={<Conductores />} />
               <Route path="rutas" element={<Rutas />} />
+              <Route path="vehiculos" element={<Vehiculos />} />
               <Route path="recorridos" element={<Recorridos />} />
               <Route path="configuracion" element={<Configuracion setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="asignaciones" element={<Asignaciones />} />

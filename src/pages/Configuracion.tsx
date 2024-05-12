@@ -15,6 +15,7 @@ export const Configuracion = ({setIsAuthenticated}:LayoutProps) => {
         handleSubmit,
       } = useForm();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const submit = async (data:any) => {   
         const local: Usuario | null = JSON.parse(localStorage.getItem("data") || 'null');
         try {
@@ -31,7 +32,7 @@ export const Configuracion = ({setIsAuthenticated}:LayoutProps) => {
             return redirect('/login');
           }
          
-         
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error:any) {
         
           setfirst(error.response.data.message)
@@ -56,7 +57,7 @@ export const Configuracion = ({setIsAuthenticated}:LayoutProps) => {
             return redirect('/login');
           }
          
-         
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error:any) {
           console.error('Error en GET:', error);
           setfirst(error.response.data.message)
