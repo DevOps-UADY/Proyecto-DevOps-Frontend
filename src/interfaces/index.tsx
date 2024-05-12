@@ -95,19 +95,19 @@ export interface AsignacionDTO{
 
 export interface Recorridos{
     id: number;
-    asignacion: Asignacion;
-    auxAsignacion: number;
+    asignacion?: Asignacion;
+    auxAsignacion?: number;
     rutaId: number;
     fechaRecorrido: string;
     exito: boolean;
-    comentarios: string;
+    comentario: string;
     fechaCreacion: Date;
 }
 
 export interface RecorridosDTO{
-    asignacionId: number;
-    rutaId: number;
-    fechaRecorrido: string;
+    asignacionId?: number;
+    rutaId?: number;
+    fechaRecorrido?: string;
     exito?: boolean;
-    comentarios?: string;
+    comentario?: string;
 }

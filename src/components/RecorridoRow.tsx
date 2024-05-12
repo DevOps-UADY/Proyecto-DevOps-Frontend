@@ -10,7 +10,7 @@ interface Props {
 
 export const RecorridoRow = ({ recorrido, children }: Props) => {
   const { id, auxAsignacion, rutaId, fechaRecorrido,
-    exito, comentarios, fechaCreacion, asignacion } = recorrido;
+    exito, comentario, fechaCreacion, asignacion } = recorrido;
 
   const fechaCreacionAux = new Date(fechaCreacion);
   const options: Intl.DateTimeFormatOptions = {
@@ -30,8 +30,8 @@ export const RecorridoRow = ({ recorrido, children }: Props) => {
         <Table.Cell>{rutaId}</Table.Cell>
         <Table.Cell>{fechaRecorrido}</Table.Cell>
         <Table.Cell>{`${exito}`}</Table.Cell>
-        <Table.Cell>{comentarios}</Table.Cell>
-        <Table.Cell>{asignacion.id}</Table.Cell>
+        <Table.Cell>{comentario}</Table.Cell>
+        <Table.Cell>{asignacion?.id}</Table.Cell>
         <Table.Cell>{fechaFormateada}</Table.Cell>
         <Table.Cell>
           {children}

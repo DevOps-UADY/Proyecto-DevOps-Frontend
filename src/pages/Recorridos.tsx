@@ -23,11 +23,46 @@ export const Recorridos = () => {
     const [filtro, setFiltro] = useState<string>("");
     const [toast, setToast] = useState(false);
     const [toastError, setToastError] = useState(false);
-    const [idRecorrido, setIdRecorrido] = useState<number>(-0);
+    const [idRecorrido, setIdRecorrido] = useState<number>(0);
 
 
     const handleEditarClick = (id: number) => {
-        console.log(idRecorrido);
+        getRutas("", {
+            onSuccess: (data) => {
+                setRutas(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+
+        mutate("", {
+            onSuccess: (data) => {
+                
+                setRecorridos(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+
+        getAsignaciones("", {
+            onSuccess: (data) => {
+                setAsignacion(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
         setIdRecorrido(id);
         toogleIsOpenActualizar();
     }
@@ -73,7 +108,6 @@ export const Recorridos = () => {
     useEffect(() => {
         mutate("", {
             onSuccess: (data) => {
-                console.log(data);
                 
                 setRecorridos(data);
                 if(data.length === 0){
@@ -98,7 +132,7 @@ export const Recorridos = () => {
     return (
         <>
         <ModalRecorridoCrear isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} rutasArreglo={rutas} asignacionArreglo={asignacion}/>
-        <ModalRecorridoActualizar isOpen={isOpenActualizar} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpenActualizar()} rutasArreglo={rutas} asignacionArreglo={asignacion}/>
+        <ModalRecorridoActualizar isOpen={isOpenActualizar} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpenActualizar()} rutasArreglo={rutas} asignacionArreglo={asignacion} initialData={recorridos} idRe={idRecorrido}/>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -131,7 +165,7 @@ export const Recorridos = () => {
                                         .filter(recorrido => recorrido.fechaRecorrido.toLowerCase().includes(filtro.toLowerCase()))
                                         .map((recorrido) => (
                                                 <RecorridoRow key={recorrido.id} recorrido={recorrido}>
-                                                    <DropDownR onEditarClick={handleEditarClick} onEliminarClick={handleEliminarClick} value={recorrido.id} />
+                                                    <DropDownR onEditarClick={()=>handleEditarClick(recorrido.id)} onEliminarClick={handleEliminarClick} value={recorrido.id} />
                                                 </RecorridoRow>
                                         ))
                                 )

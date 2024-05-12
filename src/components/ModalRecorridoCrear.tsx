@@ -15,9 +15,7 @@ interface Props {
 
 export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo }: Props) => {
 	const createRuta = useCreateRecorrido();
-	console.log(asignacionArreglo);
-		
-
+	
 	const [info, setInfo] = useState({
 		asignacionId: "0",
 		rutaId: "0",
@@ -31,7 +29,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 		e.preventDefault();
 		
 		if (isNaN(Date.parse(info.fechaRecorrido))) {
-            setMensaje('El valor de la fecha de nacimiento debe presentar un formato de DD/MM/AA');
+            setMensaje('El valor de la fecha debe presentar un formato de DD/MM/AAA');
 			setMostrarAlerta(true);
 			return;
         }
@@ -44,9 +42,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 
 				mutateInfoClients();
 			},
-			onError: (error) => {
-				console.log(error);
-				
+			onError: (error) => {		
 				setMensaje(error.message);
 				setMostrarAlerta(true);
 			},
@@ -61,7 +57,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 						htmlFor="rutaId"
 						className="block mb-2 text-sm font-medium"
 					>
-						Recorrido
+						Ruta
 					</label>
 					<Select 
 						id="rutaId" 

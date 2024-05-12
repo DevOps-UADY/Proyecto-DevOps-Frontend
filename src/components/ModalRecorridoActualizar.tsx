@@ -1,9 +1,9 @@
 import { Modal } from "./Modal";
 import { FormEvent, useState } from "react";
 import { TextInput, Select } from "flowbite-react";
-import { useCreateRecorrido } from "../api";
+import { useUpdateRecorrido } from "../api";
 import { Alert } from "flowbite-react";
-import { Ruta as IRuta, Asignacion as IAsignacion } from "../interfaces";
+import { Ruta as IRuta, Asignacion as IAsignacion, Recorridos as IRecorridos, RecorridosDTO } from "../interfaces";
 
 interface Props {
 	isOpen: boolean;
@@ -11,17 +11,19 @@ interface Props {
 	mutateInfoClients: () => void;
 	rutasArreglo: IRuta[];
 	asignacionArreglo: IAsignacion[];
+	initialData: IRecorridos[];
+	idRe:number;
 }
 
-export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo }: Props) => {
-	const createRuta = useCreateRecorrido();
-	console.log(asignacionArreglo);
-		
-
+export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo, initialData, idRe }: Props) => {
+	const UpdateRecorrido = useUpdateRecorrido();
+	
 	const [info, setInfo] = useState({
-		asignacionId: "0",
-		rutaId: "0",
-		fechaRecorrido: "2024-04-04"
+		asignacionId: 0,
+		rutaId: 0,
+		fechaRecorrido: "0",
+		exito: true,
+		comentarios: "string"
 	});
 
 	const [mensaje, setMensaje] = useState("");
@@ -29,14 +31,40 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, r
 
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+		const cambios: Partial<RecorridosDTO> = {};
+
+		const valorActualRecorrido = initialData.find((recorrido) => recorrido.id === idRe);
+		const valorNuevoRecorrido = info;
+		
+		if ((valorActualRecorrido?.rutaId !== valorNuevoRecorrido.rutaId) && (valorNuevoRecorrido.rutaId !== 0)) {
+			cambios.rutaId = valorNuevoRecorrido.rutaId;
+		}
+
+		if ((valorActualRecorrido?.auxAsignacion !== valorNuevoRecorrido.asignacionId) && (valorNuevoRecorrido.asignacionId !== 0)) {
+			cambios.asignacionId = valorNuevoRecorrido.asignacionId;
+		}
+
+		if ((valorActualRecorrido?.fechaRecorrido !== valorNuevoRecorrido.fechaRecorrido) && (valorNuevoRecorrido.fechaRecorrido !== "0")) {
+			cambios.fechaRecorrido = valorNuevoRecorrido.fechaRecorrido;
+		}
+
+		if ((valorActualRecorrido?.exito !== valorNuevoRecorrido.exito) && (valorNuevoRecorrido.exito !== true)) {
+			cambios.exito = valorNuevoRecorrido.exito;
+		}
+
+		if ((valorActualRecorrido?.comentario !== valorNuevoRecorrido.comentarios) && (valorNuevoRecorrido.comentarios !== "string")) {
+			cambios.comentario = valorNuevoRecorrido.comentarios;
+		}
+		console.log(cambios);
+		
 		
 		if (isNaN(Date.parse(info.fechaRecorrido))) {
-            setMensaje('El valor de la fecha de nacimiento debe presentar un formato de DD/MM/AA');
+            setMensaje('El valor de la fecha debe presentar un formato de DD/MM/AA');
 			setMostrarAlerta(true);
 			return;
         }
 
-		createRuta.mutate({...info, asignacionId: Number(info.asignacionId), rutaId: Number(info.rutaId)}, {
+		UpdateRecorrido.mutate({recorridoId: idRe, recorrido: {...cambios}}, {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			onSuccess: (_received) => {
 
@@ -52,6 +80,7 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, r
 			},
 		});	
 	}
+	
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -61,13 +90,13 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, r
 						htmlFor="rutaId"
 						className="block mb-2 text-sm font-medium"
 					>
-						Editar recorrido
+						Ruta
 					</label>
 					<Select 
 						id="rutaId" 
 						name="rutaId"
 						required
-						onChange={(e) => setInfo({...info, rutaId: e.target.value})}
+						onChange={(e) => setInfo({...info, rutaId: parseInt(e.target.value)})}
 						>
 							<option selected>Elegir ruta</option>
 							{rutasArreglo.map((ruta) => (
@@ -88,7 +117,7 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, r
 						id="asignacionId" 
 						name="asignacionId"
 						required
-						onChange={(e) => setInfo({...info, asignacionId: e.target.value})}
+						onChange={(e) => setInfo({...info, asignacionId: parseInt(e.target.value)})}
 						>
 							<option selected>Elegir asignacion</option>
 							{asignacionArreglo.map((asignacion) => (
@@ -106,13 +135,43 @@ export const ModalRecorridoActualizar = ({ isOpen, onClose, mutateInfoClients, r
 						Fecha de recorrido
 					</label>
 					<TextInput
-					id="fechaRecorrido"
-					name="fechaRecorrido"
+					id="fechaRecorrido2"
+					name="fechaRecorrido2"
 					placeholder="2024-04-04" 
+					type="text"
+					onChange={(e) => setInfo({...info, fechaRecorrido: e.target.value})} 
+					color="info" />
+				</div>
+				<div className="mb-6">
+					<label
+						htmlFor="Exito"
+						className="block mb-2 text-sm font-medium"
+					>
+						Exito
+					</label>
+					<Select
+						id="exito"
+						required
+						onChange={(e) => setInfo({...info, exito: e.target.value === "true"})}
+					>
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</Select>
+				</div>
+				<div className="mb-6">
+					<label
+						htmlFor="Comentario"
+						className="block mb-2 text-sm font-medium"
+					>
+						Comentario
+					</label>
+					<TextInput
+					id="comentario"
+					name="comentario"
+					placeholder="..." 
 					required
 					type="text"
-					value={info.fechaRecorrido}
-					onChange={(e) => setInfo({...info, fechaRecorrido: e.target.value})} 
+					onChange={(e) => setInfo({...info, comentarios: e.target.value})} 
 					color="info" />
 				</div>
 				{mostrarAlerta && (
