@@ -75,3 +75,61 @@ export interface Usuarios {
     correo:           string;
     codigoInvitacion: string;
 }
+
+export interface Vehiculo {
+    id: number;
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+    fechaIngresoSistema: Date;
+}
+
+export interface VehiculoDTO {
+    marca: string;
+    modelo: string;
+    vin: string;
+    placa: string;
+    fechaCompra: string;
+    costo: number;
+    fotografia: string;
+    estatusAsignacion: boolean;
+}
+
+export interface Asignacion{
+    id: string;
+    idRuta: string;
+    vehiculo?: Vehiculo;
+    conductor?: Conductor;
+    enFuncionamiento?: boolean;
+    fechaAsignacionVinculacion: Date;
+}
+
+export interface AsignacionDTO{
+    idVehiculo?: number;
+    idConductor?: number;
+    enFuncionamiento?: boolean;
+}
+
+export interface Recorridos{
+    id: number;
+    asignacion?: Asignacion;
+    auxAsignacion?: number;
+    rutaId: number;
+    fechaRecorrido: string;
+    exito: boolean;
+    comentario: string;
+    fechaCreacion: Date;
+}
+
+export interface RecorridosDTO{
+    asignacionId?: number;
+    rutaId?: number;
+    fechaRecorrido?: string;
+    exito?: boolean;
+    comentario?: string;
+}

@@ -2,6 +2,7 @@
   "name": "proyecto-devops-frontend",
   "private": true,
   "version": "0.0.0",
+  "author": "Jonatan Jafet Santana May, Wilbert Gamboa, Ariel Fernandez, Edwin Andrade",
   "type": "module",
   "scripts": {
     "dev": "vite",
