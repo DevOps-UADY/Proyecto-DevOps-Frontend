@@ -110,8 +110,8 @@ export interface Asignacion{
 }
 
 export interface AsignacionDTO{
-    vehiculo?: Vehiculo;
-    conductor?: Conductor;
+    idVehiculo?: number;
+    idConductor?: number;
     enFuncionamiento?: boolean;
 }
 

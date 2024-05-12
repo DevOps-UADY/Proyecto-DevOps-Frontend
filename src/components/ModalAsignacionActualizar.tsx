@@ -34,16 +34,17 @@ export const ModalAsignacionActualizar = ({ isOpen, onClose, mutateInfoClients, 
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
         const cambios: Partial<AsignacionDTO> = {};
-
+		console.log(info);
+		
         const valorActualAsignacion = initialData.find((asignacion) => parseInt(asignacion.id) === idAsign);
 		const valorNuevaAsignacion = info;
 
-        if (valorActualAsignacion?.conductor !== valorNuevaAsignacion.conductor) {
-			cambios.conductor = valorNuevaAsignacion.conductor;
+        if ((valorActualAsignacion?.conductor?.id !== valorNuevaAsignacion.conductor?.id) && (valorNuevaAsignacion.conductor !== undefined)) {
+			cambios.idConductor = valorNuevaAsignacion.conductor?.id;
 		}
 
-        if (valorActualAsignacion?.vehiculo !== valorNuevaAsignacion.vehiculo) {
-			cambios.vehiculo = valorNuevaAsignacion.vehiculo;
+        if ((valorActualAsignacion?.vehiculo?.id !== valorNuevaAsignacion.vehiculo?.id) && (valorNuevaAsignacion.vehiculo !== undefined)) {
+			cambios.idVehiculo = valorNuevaAsignacion.vehiculo?.id;
 		}
         cambios.enFuncionamiento = valorNuevaAsignacion.enFuncionamiento
 
@@ -66,7 +67,7 @@ export const ModalAsignacionActualizar = ({ isOpen, onClose, mutateInfoClients, 
             },
             onError: (error) => {
                 console.log(error);
-                setMensaje(error.message);
+                setMensaje("asignación ya existente");
                 setMostrarAlerta(true);
             }
         });

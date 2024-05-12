@@ -4,6 +4,7 @@ import {Select } from "flowbite-react";
 import { useCreateAsignacion } from "../api";
 import { Alert } from "flowbite-react";
 import { Conductor as IConductor, Vehiculo as IVehiculo } from "../interfaces";
+import { AsignacionDTO as IAsignacionDTO } from "../interfaces";
 
 interface Props {
 	isOpen: boolean;
@@ -15,8 +16,6 @@ interface Props {
 
 export const ModalAsignacionCrear = ({ isOpen, onClose, mutateInfoClients, conductoresArreglo, vehiculosArreglo}: Props) => {
 	const createAsignacion = useCreateAsignacion();
-	console.log(conductoresArreglo);
-	console.log(vehiculosArreglo)
 
     const [info, setInfo] = useState<{
 		vehiculo: IVehiculo | undefined;
@@ -33,8 +32,11 @@ export const ModalAsignacionCrear = ({ isOpen, onClose, mutateInfoClients, condu
 
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-
-        createAsignacion.mutate({...info}, {
+		const cambios: Partial<IAsignacionDTO> = {};
+		cambios.idConductor = info.conductor?.id;
+		cambios.idVehiculo = info.vehiculo?.id;
+		
+        createAsignacion.mutate({...cambios}, {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             onSuccess: (_received) => {
 

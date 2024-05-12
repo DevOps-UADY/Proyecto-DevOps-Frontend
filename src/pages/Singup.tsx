@@ -13,7 +13,7 @@ interface MyInputTypes {
     codigoInvitacion:string
   }
   
-
+// Wilber hizo esto
 export const Singup = () => {
     const navigate= useNavigate();
     const [first, setfirst] = useState([])

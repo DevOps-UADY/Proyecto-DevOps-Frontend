@@ -9,7 +9,7 @@ import { Toast } from "flowbite-react";
 import { Ruta as IRuta, Asignacion} from "../interfaces";
 import { HiCheck, HiExclamation} from "react-icons/hi";
 
-
+// JOnatan hizo esto
 export const Recorridos = () => {
     const [isOpen, toogleIsOpen] = useToggle();
     const [isOpenActualizar, toogleIsOpenActualizar] = useToggle();

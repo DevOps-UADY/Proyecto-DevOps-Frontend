@@ -12,7 +12,7 @@ interface Props {
 	rutasArreglo: IRuta[];
 	asignacionArreglo: IAsignacion[];
 }
-
+// N
 export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasArreglo, asignacionArreglo }: Props) => {
 	const createRuta = useCreateRecorrido();
 	
@@ -24,7 +24,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 
 	const [mensaje, setMensaje] = useState("");
 	const [mostrarAlerta, setMostrarAlerta] = useState(false);
-
+// O
 	const onSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		
@@ -39,7 +39,7 @@ export const ModalRecorridoCrear = ({ isOpen, onClose, mutateInfoClients, rutasA
 			onSuccess: (_received) => {
 
 				onClose();
-
+// J
 				mutateInfoClients();
 			},
 			onError: (error) => {		
