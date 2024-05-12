@@ -3,3 +3,4 @@ export * from './Rutas';
 export * from './Conductores';
 export * from './Dashboard';
 export * from './Recorridos';
+export * from './Asignaciones'
