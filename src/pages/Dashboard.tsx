@@ -15,6 +15,7 @@ export const Dashboard = () => {
     const [usuarios,setUsuarios] = useState<number>()
     const { mutate:mutateAsignaciones } = useGetAsignaciones();
     const [asignaciones, setAsignaciones] = useState<IAsignacion[]>([]);
+
     useEffect(() => {
         mutateRutas("", {
             onSuccess: (data) => {
@@ -37,6 +38,7 @@ export const Dashboard = () => {
             }
         });
 
+        
     }, [mutateRutas, mutateConductores,mutateUsuarios, mutateAsignaciones]);
 
     return (

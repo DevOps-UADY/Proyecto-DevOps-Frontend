@@ -53,7 +53,7 @@ export interface Usuarios {
 }
 
 export interface Vehiculo {
-    id: string;
+    id: number;
     marca: string;
     modelo: string;
     vin: string;
@@ -78,17 +78,15 @@ export interface VehiculoDTO {
 
 export interface Asignacion{
     id: string;
-    vehiculoAsociado: Vehiculo;
-    conductorAsociado: Conductor;
-    idRuta: string;
+    vehiculo?: Vehiculo;
+    conductor?: Conductor;
+    enFuncionamiento?: boolean;
     fechaAsignacionVinculacion: Date;
-    enFuncionamiento: boolean;
 }
-
 
 export interface AsignacionDTO{
-    vehiculoAsociado: Vehiculo;
-    conductorAsociado: Conductor;
-    idRuta: string;
-    enFuncionamiento: boolean;
+    vehiculo?: Vehiculo;
+    conductor?: Conductor;
+    enFuncionamiento?: boolean;
 }
+

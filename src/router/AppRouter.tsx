@@ -1,10 +1,11 @@
 import  { useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '../Layout'
-import { Conductores, Dashboard, Rutas } from '../pages'
+import { Conductores, Dashboard, Rutas, Asignaciones } from '../pages'
 import { Singup } from '../pages/Singup'
 import { Login } from '../pages/Login'
 import { Configuracion } from '../pages/Configuracion'
+
 
 export const AppRouter = () => {
 
@@ -23,6 +24,7 @@ export const AppRouter = () => {
               <Route path="conductores" element={<Conductores />} />
               <Route path="rutas" element={<Rutas />} />
               <Route path="configuracion" element={<Configuracion setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="asignaciones" element={<Asignaciones />} />
             </Route>
         </>
        :
