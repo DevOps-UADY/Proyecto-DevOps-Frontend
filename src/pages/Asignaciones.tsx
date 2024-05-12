@@ -1,10 +1,12 @@
 "use client";
-import { SearchForm, AddAsignacionButton, DropDownR, AsignacionRow, ModalAsignacion } from "../components";
+import { SearchForm, AddAsignacionButton, DropDownR, AsignacionRow, ModalAsignacionCrear, ModalAsignacionActualizar } from "../components";
 import { Table } from "flowbite-react";
 import { useToggle } from "../hooks";
 import { useEffect, useState } from "react";
 import { Asignacion as IAsignacion} from "../interfaces";
-import { useGetAsignaciones, useDeleteAsignacion } from "../api";
+import { Conductor as IConductor} from "../interfaces";
+import { Vehiculo as IVehiculo} from "../interfaces";
+import { useGetAsignaciones, useDeleteAsignacion, useGetConductores, useGetVehiculos} from "../api";
 import { Toast } from "flowbite-react";
 import { HiCheck, HiExclamation} from "react-icons/hi";
 
@@ -17,14 +19,49 @@ export const Asignaciones = () => {
     const [filtro, setFiltro] = useState<string>("");
     const [toast, setToast] = useState(false);
     const [toastError, setToastError] = useState(false);
-    const [accion, setAccion] = useState<number>(0);
-    const [idAsignacion, setIdAsignacion] = useState<number>(-0);
-
+    const [idAsignacion, setIdAsignacion] = useState<number>(0);
+    const { mutate: getConductores } = useGetConductores();
+    const [conductores, setConductores] = useState<IConductor[]>([]);
+    const { mutate: getVehiculos } = useGetVehiculos();
+    const [vehiculos, setVehiculos] = useState<IVehiculo[]>([]);
+    const [isOpenActualizar, toogleIsOpenActualizar] = useToggle();
 
     const handleEditarClick = (id: number) => {
-        setAccion(1);
+        mutate("", {
+            onSuccess: (data) => {
+                setAsignaciones(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+        getConductores("", {
+            onSuccess: (data) => {
+                setConductores(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+        getVehiculos("", {
+            onSuccess: (data) => {
+                setVehiculos(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
         setIdAsignacion(id);
-        toogleIsOpen();
+        toogleIsOpenActualizar();
     }
 
     const handleEliminarClick = (id: number) => {
@@ -39,7 +76,28 @@ export const Asignaciones = () => {
     }
 
     const handleModal = () => {
-        setAccion(0);
+        getConductores("", {
+            onSuccess: (data) => {
+                setConductores(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
+        getVehiculos("", {
+            onSuccess: (data) => {
+                setVehiculos(data);
+                if(data.length === 0){
+                    setToastError(true);
+                }
+            },
+            onError: () => {
+                setToastError(true);
+            }
+        });
         toogleIsOpen();
     }
 
@@ -69,7 +127,8 @@ export const Asignaciones = () => {
     return (
         <>
      
-        <ModalAsignacion isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} initialData={idAsignacion} action={accion} />
+        <ModalAsignacionCrear isOpen={isOpen} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpen()} conductoresArreglo={conductores} vehiculosArreglo={vehiculos}/>
+        <ModalAsignacionActualizar isOpen={isOpenActualizar} mutateInfoClients={mutateInfoClients} onClose={() => toogleIsOpenActualizar()} conductoresArreglo={conductores} vehiculosArreglo={vehiculos} initialData={asignaciones} idAsign={idAsignacion}/>
             <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
                 <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -97,7 +156,7 @@ export const Asignaciones = () => {
                                     </Table.Row>
                                 ) : (
                                     asignaciones
-                                        .filter(asignacion => asignacion.conductor.nombreConductor.toLowerCase().includes(filtro.toLowerCase())) // Filtra las asignaciones según el filtro
+                                        .filter(asignacion => asignacion.conductor?.nombreConductor.toLowerCase().includes(filtro.toLowerCase())) // Filtra las asignaciones según el filtro
                                         .map((asignacion) => (
                                                 <AsignacionRow key={asignacion.id} asignacion={asignacion}>
                                                     <DropDownR onEditarClick={handleEditarClick} onEliminarClick={handleEliminarClick} value={parseInt(asignacion.id)} />
