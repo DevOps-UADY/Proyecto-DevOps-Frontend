@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    environment {
+        SERVER_USER = 'devasc' // Cambia esto por el nombre de usuario en el servidor remoto
+        SERVER_IP = '192.168.1.110' // Cambia esto por la IP del servidor remoto
+        SERVER_DEST_DIR = '/home/devasc/buildFront/' // Cambia esto por el directorio de destino en el servidor remoto
+        SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
+    }
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Transfer to Server') {
+            steps {
+                script {
+                    def buildDir = 'dist'
+                    def sshCommand = "ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} 'echo \"Conexión exitosa\"'"
+                    try {
+                        sh sshCommand
+                        echo "Conexión SSH exitosa"
+                        sh "scp -o StrictHostKeyChecking=no -i ${SSH_KEY} -r ${buildDir} ${SERVER_USER}@${SERVER_IP}:${SERVER_DEST_DIR}"
+                    } catch (Exception e) {
+                        echo "Error: No se pudo conectar al servidor"
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
+        stage('Restart Nginx') {
+            steps {
+                script {
+                    sshCommand = "ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} 'sudo systemctl restart nginx'"
+                    sh sshCommand
+                }
+            }
+        }
+    }
+}
+
