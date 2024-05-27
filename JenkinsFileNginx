@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    environment {
+        SERVER_USER = 'devasc' // Cambia esto por el nombre de usuario en el servidor remoto
+        SERVER_IP = '192.168.1.110' // Cambia esto por la IP del servidor remoto
+        SERVER_DEST_DIR = '/var/www/html/' // Cambia esto por el directorio de destino en el servidor remoto
+        SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
+        SUDO_PASSWORD = credentials('sudo-password') // Usando el ID de la credencial para la contraseña de sudo
+    }
     stages {
         stage('Install Dependencies') {
             steps {
@@ -12,17 +19,12 @@ pipeline {
             }
         }
         stage('Transfer to Server') {
-            environment {
-                SERVER_USER = 'devasc' // Cambia esto por el nombre de usuario en el servidor remoto
-                SERVER_IP = '192.168.1.110' // Cambia esto por la IP del servidor remoto
-                SERVER_DEST_DIR = '/var/www/html/' // Cambia esto por el directorio de destino en el servidor remoto
-            }
             steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credential', keyFileVariable: 'SSH_KEY')]) {
-                        def buildDir = 'dist' // Cambia esto por el directorio que contiene tu build
-                        sh "scp -o StrictHostKeyChecking=no -i \"${SSH_KEY}\" -r ${buildDir} ${SERVER_USER}@${SERVER_IP}:${SERVER_DEST_DIR}"
-                    }
+                    def buildDir = 'dist' // Cambia esto por el directorio que contiene tu build
+                    sh """
+                    echo "${SUDO_PASSWORD}" | sudo -S scp -o StrictHostKeyChecking=no -i "${SSH_KEY}" -r ${buildDir} ${SERVER_USER}@${SERVER_IP}:${SERVER_DEST_DIR}
+                    """
                 }
             }
         }
@@ -36,3 +38,4 @@ pipeline {
         }
     }
 }
+
