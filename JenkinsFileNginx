@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        SERVER_USER = 'devasc' // Cambia esto por el nombre de usuario en el servidor remoto
+        SERVER_IP = '192.168.1.110' // Cambia esto por la IP del servidor remoto
+        SERVER_DEST_DIR = '/var/www/html/' // Cambia esto por el directorio de destino en el servidor remoto
+        SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Transfer to Server') {
+            steps {
+                script {
+                    def buildDir = 'dist' // Cambia esto por el directorio que contiene tu build
+                    sh """
+                    scp -o StrictHostKeyChecking=no -i ${SSH_KEY} -r ${buildDir} ${SERVER_USER}@${SERVER_IP}:${SERVER_DEST_DIR}
+                    """
+                }
+            }
+        }
+    }
+}
