@@ -7,6 +7,11 @@ pipeline {
         SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
     }
     stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm run build'
