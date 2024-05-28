@@ -25,7 +25,7 @@ export const Singup = () => {
 
       const submit = async (data:MyInputTypes) => {   
         try {
-            await axios.post("http://192.168.1.110:3000/usuarios/register",data)
+            await axios.post("http://localhost:3000/usuarios/register",data)
             localStorage.setItem('auth', 'true');
             navigate('/login')
             return redirect('/login');

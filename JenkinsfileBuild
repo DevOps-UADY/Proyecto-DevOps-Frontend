@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        SERVER_USER = 'devasc' // Cambia esto por el nombre de usuario en el servidor remoto
-        SERVER_IP = '192.168.1.110' // Cambia esto por la IP del servidor remoto
-        SERVER_DEST_DIR = '/home/devasc/buildFront/' // Cambia esto por el directorio de destino en el servidor remoto
+        SERVER_USER = 'user' // Cambia esto por el nombre de usuario en el servidor remoto
+        SERVER_IP = '192.168.1.177' // Cambia esto por la IP del servidor remoto
+        SERVER_DEST_DIR = '/home/user/buildFront/' // Cambia esto por el directorio de destino en el servidor remoto
         SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
     }
     stages {
@@ -33,14 +33,16 @@ pipeline {
                 }
             }
         }
-        stage('Restart Nginx') {
+        stage('Run Script') {
             steps {
                 script {
-                    sshCommand = "ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} 'sudo systemctl restart nginx'"
+                    // Comando SSH para ejecutar el script en la máquina virtual
+                    def sshCommand = """
+                    ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} 'bash /home/user/copiar.sh'
+                    """
                     sh sshCommand
                 }
             }
         }
     }
 }
-
