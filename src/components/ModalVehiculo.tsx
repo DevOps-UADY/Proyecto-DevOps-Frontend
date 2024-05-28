@@ -127,7 +127,7 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
         const formData = objetoAFormData(data);
         if (action===0) {
 
-            axios.post('http://localhost:3000/vehiculos', formData, {
+            axios.post('http://192.168.1.110:3000/vehiculos', formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data' // Importante indicar el tipo de contenido
                 }
@@ -149,7 +149,7 @@ export const ModalVehiculo = ({ isOpen, onClose, mutateInfoVehiculos, initialDat
                 });
         }else{
             console.log({initialData})
-            axios.put('http://localhost:3000/vehiculos/'+initialData, formData, {
+            axios.put('http://192.168.1.110:3000/vehiculos/'+initialData, formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
