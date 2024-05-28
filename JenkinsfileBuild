@@ -38,7 +38,7 @@ pipeline {
                 script {
                     def sshDeployCommand = """
                         ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} << EOF
-                        sudo cp -r ${SERVER_DEST_DIR}* /var/www/html/
+                        sudo cp -r ${SERVER_DEST_DIR}/dist/* /var/www/html/
                         sudo systemctl restart nginx
                         exit
                         EOF
