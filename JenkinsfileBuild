@@ -33,17 +33,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy and Restart Nginx') {
+        stage('Run Script') {
             steps {
                 script {
-                    def sshDeployCommand = """
-                        ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} << EOF
-                        sudo cp -r ${SERVER_DEST_DIR}/dist/* /var/www/html/
-                        sudo systemctl restart nginx
-                        exit
-                        EOF
+                    // Comando SSH para ejecutar el script en la máquina virtual
+                    def sshCommand = """
+                    ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${SERVER_USER}@${SERVER_IP} 'bash /home/user/copiar.sh'
                     """
-                    sh sshDeployCommand
+                    sh sshCommand
                 }
             }
         }
