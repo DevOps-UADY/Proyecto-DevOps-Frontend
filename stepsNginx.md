@@ -2,11 +2,12 @@
 
 #### Configuración de Nginx en el Servidor
 
-1. **Instalar SSH Server en el Servidor**:
+1. **Instalar SSH Server y nginx en el Servidor**:
    - Si el servidor no tiene SSH Server instalado, puedes instalarlo ejecutando:
      ```
      sudo apt update
      sudo apt install openssh-server
+     sudo apt install nginx
      ```
 
 2. **Acceder al Servidor**:
@@ -37,8 +38,11 @@
 #### Configuración del Pipeline en Jenkins
 
 1. **Configurar Credenciales en Jenkins**:
+   - Para tener "manage Credential" se debe instalar el plugin ssh agent.
    - En Jenkins, ve a "Manage Jenkins" -> "Manage Credentials" -> "Global credentials (unrestricted)" -> "Add Credentials".
+   - "http://localhost:8080/manage/credentials/store/system/domain/_/newCredentials"
    - Elige el tipo de credencial "SSH Username with private key" y proporciona la clave SSH privada.
+   - Para generar la llave https://www.webhi.com/how-to/how-to-use-a-private-key-for-ssh-authentication/
    - Asigna un ID a la credencial y guarda.
 
 2. **Crear un Nuevo Pipeline**:
