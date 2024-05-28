@@ -26,7 +26,7 @@ export const Configuracion = ({setIsAuthenticated}:LayoutProps) => {
               }
             };
            
-            await axios.put('http://localhost:3000/usuarios',data,axiosConfig);
+            await axios.put('http://192.168.1.110:3000/usuarios',data,axiosConfig);
             setIsAuthenticated(false)
             navigate('/login')
             return redirect('/login');
