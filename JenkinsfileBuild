@@ -3,7 +3,7 @@ pipeline {
     environment {
         SERVER_USER = 'user' // Cambia esto por el nombre de usuario en el servidor remoto
         SERVER_IP = '192.168.1.177' // Cambia esto por la IP del servidor remoto
-        SERVER_DEST_DIR = '/home/devasc/buildFront/' // Cambia esto por el directorio de destino en el servidor remoto
+        SERVER_DEST_DIR = '/home/user/buildFront/' // Cambia esto por el directorio de destino en el servidor remoto
         SSH_KEY = credentials('ssh-credential') // Usando el ID de la credencial configurada
     }
     stages {
