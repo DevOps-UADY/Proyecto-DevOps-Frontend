@@ -21,7 +21,7 @@ export const Login = ({setIsAuthenticated}:LayoutProps) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const submit = async (data:any) => {   
         try {
-           const response =  await axios.post("http://192.168.1.110:3000/usuarios/login",data)
+           const response =  await axios.post("http://192.168.1.111:3000/usuarios/login",data)
          
             const jwt = response.data.jwt
             const objetoSerializado = JSON.stringify(response.data);
