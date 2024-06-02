@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+        stage('Execute lint cases') {
+            steps {
+                sh 'npm run lint'
+            }
+        }
+        stage('Execute tests') {
+            steps {
+                sh 'npm run test'
+            }
+        }
+    }
+    post {
+        success {
+            build 'pl-02'
+        }
+    }
+}

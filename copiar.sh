@@ -1,0 +1,1 @@
+sudo cp -r /home/user/buildFront/dist/* /var/www/html/
